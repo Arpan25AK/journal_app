@@ -1,6 +1,8 @@
 package com.spring_boot_project.journalApp.controller;
 
 import com.spring_boot_project.journalApp.entity.journalEntry;
+import com.spring_boot_project.journalApp.service.journalEntryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,17 +14,18 @@ import java.util.Map;
 @RequestMapping("/journal")
 public class journalEntryControllerV2 {
 
-
+    @Autowired
+    private journalEntryService journalEntryService;
 
     @GetMapping
     public List<journalEntry> getAll(){
-        return null;
+        return journalEntryService.getAll();
     }
 
     @PostMapping
     public boolean createEntry(@RequestBody journalEntry myEntry){
-
-        return null;
+        journalEntryService.saveEntry(myEntry);
+        return true;
     }
     @GetMapping("/id/{myid}")
     public journalEntry getjournaEntryById(@PathVariable Long myid){
