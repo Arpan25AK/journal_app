@@ -2,6 +2,7 @@ package com.spring_boot_project.journalApp.entity;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @Document(collection = "journal_entries")
 @Data
+@NoArgsConstructor
 public class journalEntry {
     @Id
     private ObjectId id;
