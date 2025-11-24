@@ -58,22 +58,24 @@ public class journalEntryControllerV2 {
     }
 
     @DeleteMapping("/id/{myid}")
-    public ResponseEntity<?> deltejournalEntryById(@PathVariable ObjectId myid){
-        journalEntryService.deleteById(myid);
+    public ResponseEntity<?> deltejournalEntryById(@PathVariable ObjectId myid,@PathVariable String userName){
+        journalEntryService.deleteById(myid,userName);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //@PutMapping("/id/{id}")
-    //public ResponseEntity<?> updateJournalEntryById(@PathVariable ObjectId id,@RequestBody journalEntry newEntry){
-     //   journalEntry old = journalEntryService.findById(id).orElse(null);
-     //   if (old != null) {
-      //      old.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : old.getTitle());
-      //      old.setContent(newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent() : old.getContent());
-      //      journalEntryService.saveEntry(old);
-      //      return new ResponseEntity<>(old, HttpStatus.OK);
-      //  }
-      //  return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //}
+    @PutMapping("/id/{userName}/{id}")
+    public ResponseEntity<?> updateJournalEntryById(@PathVariable ObjectId id,
+                                                    @RequestBody journalEntry newEntry,
+                                                    @PathVariable String userName){
+        journalEntry old = journalEntryService.findById(id).orElse(null);
+        if (old != null) {
+            old.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : old.getTitle());
+            old.setContent(newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent() : old.getContent());
+            journalEntryService.saveEntry(old);
+            return new ResponseEntity<>(old, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
 }
