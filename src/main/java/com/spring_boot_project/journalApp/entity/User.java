@@ -20,7 +20,7 @@ public class User {
     @NonNull
     private String userName;
     @NonNull
-    private String Password;
+    private String password;
     @DBRef
     private List<journalEntry> journalEntries = new ArrayList<>();
 
