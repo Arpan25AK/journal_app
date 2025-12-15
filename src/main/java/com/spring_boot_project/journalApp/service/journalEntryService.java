@@ -22,36 +22,45 @@ public class journalEntryService {
     private UserService userService;
 
     @Transactional
-    public void saveEntry(journalEntry journalEntry, String userName){
+    public void saveEntry(journalEntry journalEntry, String userName) {
         try {
             User user = userService.findByuserName(userName);
             journalEntry.setDate(LocalDateTime.now());
             journalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-            throw new RuntimeException("A error has occurred during the save operation",e);
+            throw new RuntimeException("A error has occurred during the save operation", e);
         }
     }
 
-    public void saveEntry(journalEntry journalEntry){
+    public void saveEntry(journalEntry journalEntry) {
         journalEntryRepository.save(journalEntry);
     }
 
-    public List<journalEntry> getAll(){
+    public List<journalEntry> getAll() {
         return journalEntryRepository.findAll();
     }
 
-    public Optional<journalEntry> findById(ObjectId Id){
+    public Optional<journalEntry> findById(ObjectId Id) {
         return journalEntryRepository.findById(Id);
     }
 
-    public void deleteById(ObjectId id, String userName){
-        User user = userService.findByuserName(userName);
-        user.getJournalEntries().removeIf(x -> x.getId().equals(id));
-        userService.saveNewUser(user);
-        journalEntryRepository.deleteById(id);
+    @Transactional
+    public boolean deleteById(ObjectId id, String userName) {
+        boolean removed = false;
+        try {
+            User user = userService.findByuserName(userName);
+            removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+            if (removed) {
+                userService.saveUser(user);
+                journalEntryRepository.deleteById(id);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException("A error has occurred during the delete operation", e);
+        }
+        return removed;
     }
 }
