@@ -31,7 +31,7 @@ public class UserService {
             UserRepository.save(user);
             return true;
         } catch (Exception e) {
-            logger.info("an error has occured during the saving opetation");
+            logger.error("an error has occured during the saving opetation");
             return false;
         }
 
