@@ -3,6 +3,8 @@ package com.spring_boot_project.journalApp.service;
 import com.spring_boot_project.journalApp.entity.User;
 import com.spring_boot_project.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,8 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     public boolean saveNewUser(User user){
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -27,6 +31,7 @@ public class UserService {
             UserRepository.save(user);
             return true;
         } catch (Exception e) {
+            logger.info("an error has occured during the saving opetation");
             return false;
         }
 
