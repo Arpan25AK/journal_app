@@ -1,8 +1,10 @@
 package com.spring_boot_project.journalApp.controller;
 
+import com.spring_boot_project.journalApp.api.response.WhetherResponse;
 import com.spring_boot_project.journalApp.entity.User;
 import com.spring_boot_project.journalApp.repository.UserRepository;
 import com.spring_boot_project.journalApp.service.UserService;
+import com.spring_boot_project.journalApp.service.WhetherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WhetherService whetherService;
 
     @PostMapping
     public void createUsers(@RequestBody User user){
@@ -48,6 +53,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> greetings() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>("Hi " + authentication.getName(), HttpStatus.OK);
+        WhetherResponse whetherResponse = whetherService.getWhether("Mumbai");
+        String greeting = "";
+        if(whetherResponse != null){
+            greeting = "the current temperature in the city is " + whetherResponse.getCurrent().getTemperature();
+        }
+        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.OK);
     }
 }

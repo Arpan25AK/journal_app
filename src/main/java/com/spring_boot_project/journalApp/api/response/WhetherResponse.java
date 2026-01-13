@@ -1,13 +1,19 @@
 package com.spring_boot_project.journalApp.api.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-public class whetherResponse {
+@Getter
+@Setter
+public class WhetherResponse {
 
     private Current current;
 
-    public class Current {
+    @Getter
+    @Setter
+    public static class Current {
 
         private int temperature;
 
