@@ -1,21 +1,18 @@
 package com.spring_boot_project.journalApp.api.response;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class whetherResponse {
-    public class Root{
-        public Current current;
+
+    private Current current;
+
+    public class Current {
+
+        private int temperature;
+
+        @JsonProperty("weather_descriptions")
+        private List<String> weatherDescriptions;
+
     }
-    public class Current{
-
-        public String observation_time;
-        public int temperature;
-
-    }
-
-
-
-
-
-
 }
