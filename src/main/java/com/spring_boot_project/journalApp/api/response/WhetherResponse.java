@@ -22,3 +22,4 @@ public class WhetherResponse {
 
     }
 }
+//learnt about get and post call to a external api using the rest template or code through spring boot rather then the post man method and understood the diff bw component and service annotation
