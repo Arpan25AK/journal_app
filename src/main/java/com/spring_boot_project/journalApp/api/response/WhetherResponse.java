@@ -10,6 +10,7 @@ import java.util.List;
 public class WhetherResponse {
 
     private Current current;
+    private Location location;
 
     @Getter
     @Setter
@@ -20,6 +21,12 @@ public class WhetherResponse {
         @JsonProperty("weather_descriptions")
         private List<String> weatherDescriptions;
 
+    }
+
+    @Getter
+    @Setter
+    public static class Location {
+        private String name;
     }
 }
 //learnt about get and post call to a external api using the rest template or code through spring boot rather then the post man method and understood the diff bw component and service annotation
