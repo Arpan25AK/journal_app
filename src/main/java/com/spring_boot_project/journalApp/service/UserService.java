@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,9 @@ public class UserService {
 
     @Autowired
     private UserRepository UserRepository;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -34,7 +38,6 @@ public class UserService {
             logger.error("an error has occured during the saving opetation");
             return false;
         }
-
     }
 
     public void saveAdmin(User user){
@@ -45,9 +48,8 @@ public class UserService {
 
     public void saveUser(User User){
         UserRepository.save(User);
+        redisTemplate.delete("user:" + User.getUserName());
     }
-
-
 
     public List<User> getAll(){
         return UserRepository.findAll();
