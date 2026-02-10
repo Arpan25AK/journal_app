@@ -58,7 +58,8 @@ public class EmailScheduler {
                 emailService.sendEmail(
                         user.getEmail(),
                         "Sentiment Analysis",
-                        mostFreqSentiment.toString() // <--- Fix is here
+                        user.getUserName(),
+                        mostFreqSentiment
                 );
             }
         }
