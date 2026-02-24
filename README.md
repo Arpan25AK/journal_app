@@ -1,10 +1,4 @@
-Here is a professional, complete `README.md` for your Journal App. This layout is designed to immediately show recruiters and engineering managers that you understand standard backend architecture, API design, and proper documentation.
 
-You can copy this block and paste it directly into the `README.md` file in your `journal_app` repository.
-
----
-
-```markdown
 # 📓 Journal App Backend REST API
 
 A robust and scalable backend REST API built with **Java** and **Spring Boot** to manage dynamic user journal entries. This project utilizes **MongoDB** for flexible, document-based data storage and follows a clean, layered architecture (Controller, Service, Repository) to ensure seamless data flow and maintainability.
